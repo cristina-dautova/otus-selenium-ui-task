@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LessonsPage extends BasePage {
+public class LessonsPage extends BasePage<LessonsPage> {
 
     public LessonsPage(WebDriver driver) {
         super(driver);

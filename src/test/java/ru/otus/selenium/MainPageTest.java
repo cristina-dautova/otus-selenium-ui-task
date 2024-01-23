@@ -21,8 +21,8 @@ public class MainPageTest {
 
         var courseName = "Android";
 
-        ((MainPage) mainPage
-                .open())
+         mainPage
+                .open()
                 .searchCourseByNameAndClick(courseName)
                 .isSpecificLessonsPageDisplayed(courseName)
                 .goBack();
@@ -31,8 +31,8 @@ public class MainPageTest {
     @Test
     public void filterCourseByDate() {
 
-        ((MainPage) mainPage
-                .open())
+         mainPage
+                .open()
                 .searchLatestCourseAndClick(false)
                 .isLessonsPageDisplayed()
                 .goBack();

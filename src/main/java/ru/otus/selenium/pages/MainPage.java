@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MainPage extends BasePage {
+public class MainPage extends BasePage<MainPage> {
 
     public MainPage(WebDriver driver) {
         super(driver);
