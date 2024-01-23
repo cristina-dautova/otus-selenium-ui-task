@@ -1,0 +1,104 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.spotbugs.snom:spotbugs-gradle-plugin:6.0.6"
+        classpath group: 'org.yaml', name: 'snakeyaml', version: '2.2'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id "com.github.spotbugs" version "6.0.6"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("com.puppycrawl.tools:checkstyle:10.3.1")
+
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.16.1'
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.6.2'
+
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '2.2'
+
+    implementation group: 'org.assertj', name: 'assertj-core', version: '3.25.1'
+
+    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
+}
+
+checkstyle {
+    toolVersion = '8.16'
+    configFile = file("${rootProject.rootDir}/checkstyle.xml")
+}
+
+task loadYaml {
+    doLast {
+        def yamlFile = file("${rootProject.rootDir}/src/main/resources/config.yml")
+        project.ext.yamlContent = new org.yaml.snakeyaml.Yaml().load(yamlFile.text)
+    }
+}
+
+test {
+    useJUnitPlatform()
+
+    dependsOn 'loadYaml'
+
+    doFirst {
+        def activeEnvironment = project.hasProperty('activeEnvironment') ? project.activeEnvironment : 'default'
+
+        println "Active Environment: $activeEnvironment"
+        println "Base URL: ${getYamlBaseUrl(project.ext.yamlContent, activeEnvironment)}"
+    }
+}
+
+String getYamlBaseUrl(yamlContent, activeEnvironment) {
+    return yamlContent.environments.find { it.env == activeEnvironment }?.baseUrl ?: 'N/A'
+}
+
+//def yamlContent
+//
+//task loadYaml {
+//    doLast {
+//        // Load YAML content
+//        def yamlFile = file("${rootProject.rootDir}/src/main/resources/config.yml")
+//        yamlContent = new org.yaml.snakeyaml.Yaml().load(yamlFile.text)
+//    }
+//}
+//
+//test {
+//    useJUnitPlatform()
+//
+//    systemProperty 'activeEnvironment', project.hasProperty('activeEnvironment') ? project.activeEnvironment : 'default'
+//
+//    dependsOn 'loadYaml'
+//
+//    doLast {
+//        // Use the project property for activeEnvironment value
+//        def activeEnvironment = project.hasProperty('activeEnvironment') ? project.activeEnvironment : 'default'
+//
+//        // Access the yamlContent loaded earlier
+//        println "Active Environment: $activeEnvironment"
+//        println "Base URL: ${getYamlBaseUrl(yamlContent, activeEnvironment)}"
+//    }
+//
+//
+//}
+//
+//String getYamlBaseUrl(yamlContent, activeEnvironment) {
+//    // Find and return the corresponding baseUrl for the activeEnvironment
+//    return yamlContent.environments.find { it.env == activeEnvironment }?.baseUrl ?: 'N/A'
+//}

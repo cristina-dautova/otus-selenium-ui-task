@@ -1,0 +1,6 @@
+activeEnvironment: prod
+environments:
+  - env: qa
+    baseUrl: https://www.google.com
+  - env: prod
+    baseUrl: https://www.otus.ru
