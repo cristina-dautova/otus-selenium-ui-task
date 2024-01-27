@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class EnvironmentConfig {
 
-    private String env;
-    private String baseUrl;
+  private String env;
+  private String baseUrl;
 }

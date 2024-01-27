@@ -21,59 +21,59 @@ import java.util.Set;
 
 public class DriverManagerExtension implements BeforeEachCallback, AfterEachCallback {
 
-    private WebDriver driver;
+  private WebDriver driver;
 
-    @Override
-    public void afterEach(ExtensionContext context) {
-        if (driver != null) {
-            driver.close();
-            if (driver instanceof ChromeDriver) {
-                driver.quit();
-            }
-        }
+  @Override
+  public void afterEach(ExtensionContext context) {
+    if (driver != null) {
+      driver.close();
+      if (driver instanceof ChromeDriver) {
+        driver.quit();
+      }
     }
+  }
 
-    @SneakyThrows
-    @Override
-    public void beforeEach(ExtensionContext context) {
+  @SneakyThrows
+  @Override
+  public void beforeEach(ExtensionContext context) {
 
-        driver = new WebDriverFactory().create();
-        driver = new EventFiringDecorator<>(new HighlightListener(driver, 500)).decorate(driver);
+    driver = new WebDriverFactory().create();
+    driver = new EventFiringDecorator<>(new HighlightListener(driver, 500)).decorate(driver);
 
-        getAnnotatedFields(Driver.class, context)
-                .stream()
-                .filter(field -> field.getType().getName().equals(WebDriver.class.getName()))
-                .forEach(field -> {
-                    field.setAccessible(true);
-                    try {
-                        field.set(context.getTestInstance().get(), driver);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+    getAnnotatedFields(Driver.class, context)
+        .stream()
+        .filter(field -> field.getType().getName().equals(WebDriver.class.getName()))
+        .forEach(field -> {
+          field.setAccessible(true);
+          try {
+            field.set(context.getTestInstance().get(), driver);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
 
-        getAnnotatedFields(Page.class, context)
-                .stream()
-                .filter(field -> BasePage.class.isAssignableFrom(field.getType()))
-                .forEach(field -> {
-                    field.setAccessible(true);
-                    try {
-                        field.set(context.getTestInstance().get(),
-                                field.getType().getDeclaredConstructor(WebDriver.class).newInstance(driver));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-    }
+    getAnnotatedFields(Page.class, context)
+        .stream()
+        .filter(field -> BasePage.class.isAssignableFrom(field.getType()))
+        .forEach(field -> {
+          field.setAccessible(true);
+          try {
+            field.set(context.getTestInstance().get(),
+                field.getType().getDeclaredConstructor(WebDriver.class).newInstance(driver));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        });
+  }
 
-    private Set<Field> getAnnotatedFields(Class<? extends Annotation> annotation, ExtensionContext extensionContext) {
+  private Set<Field> getAnnotatedFields(Class<? extends Annotation> annotation, ExtensionContext extensionContext) {
 
-        Set<Field> fields = new HashSet<>();
-        Class<?> testClass = extensionContext.getTestClass().get();
-        Arrays.stream(testClass.getDeclaredFields())
-                .filter(field -> field.isAnnotationPresent(annotation))
-                .forEach(fields::add);
+    Set<Field> fields = new HashSet<>();
+    Class<?> testClass = extensionContext.getTestClass().get();
+    Arrays.stream(testClass.getDeclaredFields())
+        .filter(field -> field.isAnnotationPresent(annotation))
+        .forEach(fields::add);
 
-        return fields;
-    }
+    return fields;
+  }
 }

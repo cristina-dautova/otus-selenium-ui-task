@@ -8,25 +8,25 @@ import ru.otus.selenium.pages.MainPage;
 
 public class CookiesPopup extends BasePopup {
 
-    public CookiesPopup(WebDriver driver) {
-        super(driver);
-    }
+  public CookiesPopup(WebDriver driver) {
+    super(driver);
+  }
 
-    @FindBy(xpath = "//div[@class='sc-11pdrud-1']")
-    private WebElement cookiesPopup;
+  @FindBy(xpath = "//div[@class='sc-11pdrud-1']")
+  private WebElement cookiesPopup;
 
-    @FindBy(xpath = "//div[@class='sc-11pdrud-3']")
-    private WebElement acceptCookiesOkButton;
+  @FindBy(xpath = "//div[@class='sc-11pdrud-3']")
+  private WebElement acceptCookiesOkButton;
 
 
-    public CookiesPopup popupShouldBePresent() {
-        wait.until(ExpectedConditions.visibilityOf(cookiesPopup));
-        return this;
-    }
+  public CookiesPopup popupShouldBePresent() {
+    wait.until(ExpectedConditions.visibilityOf(cookiesPopup));
+    return this;
+  }
 
-    public MainPage clickAcceptCookies() {
-        wait.until(ExpectedConditions.elementToBeClickable(acceptCookiesOkButton));
-        acceptCookiesOkButton.click();
-        return new MainPage(driver);
-    }
+  public MainPage clickAcceptCookies() {
+    wait.until(ExpectedConditions.elementToBeClickable(acceptCookiesOkButton));
+    acceptCookiesOkButton.click();
+    return new MainPage(driver);
+  }
 }

@@ -7,18 +7,17 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class ChromeDriverConfiguration implements IBrowserSettings {
 
-    private final String browserVersion = System.getProperty("browser.version");
+  private final String browserVersion = System.getProperty("browser.version");
 
-    @Override
-    public WebDriver configure() {
+  @Override
+  public WebDriver configure() {
 
-        var chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--start-fullscreen");
-        chromeOptions.addArguments("--homepage=about:blank");
+    var chromeOptions = new ChromeOptions();
+    chromeOptions.addArguments("--start-fullscreen");
+    chromeOptions.addArguments("--homepage=about:blank");
 
-        WebDriverManager.chromedriver().browserVersion(browserVersion).setup();
+    WebDriverManager.chromedriver().browserVersion(browserVersion).setup();
 
-
-        return new ChromeDriver(chromeOptions);
-    }
+    return new ChromeDriver(chromeOptions);
+  }
 }

@@ -8,22 +8,22 @@ import ru.otus.selenium.applicationconfig.models.EnvironmentConfig;
 
 public class ConfigProvider {
 
-    public EnvironmentConfig provide() {
-        var yaml = new Yaml(new Constructor(Config.class, new LoaderOptions()));
-        try (var inputStream = this.getClass()
-                .getClassLoader()
-                .getResourceAsStream("config.yml");) {
+  public EnvironmentConfig provide() {
+    var yaml = new Yaml(new Constructor(Config.class, new LoaderOptions()));
+    try (var inputStream = this.getClass()
+        .getClassLoader()
+        .getResourceAsStream("config.yml")) {
 
-            Config config = yaml.load(inputStream);
+      Config config = yaml.load(inputStream);
 
-            return config.getEnvironments()
-                    .stream()
-                    .filter(env -> env.getEnv().equals(config.getActiveEnvironment()))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
+      return config.getEnvironments()
+          .stream()
+          .filter(env -> env.getEnv().equals(config.getActiveEnvironment()))
+          .findFirst()
+          .orElseThrow(IllegalArgumentException::new);
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
+  }
 }

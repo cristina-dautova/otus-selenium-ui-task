@@ -10,16 +10,16 @@ import java.time.Duration;
 
 public abstract class BaseUtils {
 
-    protected WebDriver driver;
-    protected Actions actions;
-    protected WebDriverWait wait;
-    protected SoftAssertions softAssertions;
+  protected WebDriver driver;
+  protected Actions actions;
+  protected WebDriverWait wait;
+  protected SoftAssertions softAssertions;
 
-    public BaseUtils(WebDriver driver) {
-        this.driver = driver;
-        this.actions = new Actions(driver);
-        PageFactory.initElements(driver, this);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        this.softAssertions = new SoftAssertions();
-    }
+  public BaseUtils(WebDriver driver) {
+    this.driver = driver;
+    this.actions = new Actions(driver);
+    PageFactory.initElements(driver, this);
+    this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    this.softAssertions = new SoftAssertions();
+  }
 }

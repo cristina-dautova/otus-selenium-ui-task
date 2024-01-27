@@ -5,17 +5,17 @@ import utils.BaseUtils;
 
 public class BasePopup<T> extends BaseUtils implements IPopup<T> {
 
-    public BasePopup(WebDriver driver) {
-        super(driver);
-    }
+  public BasePopup(WebDriver driver) {
+    super(driver);
+  }
 
-    @Override
-    public T popupShouldBePresent() {
-        return null;
-    }
+  @Override
+  public T popupShouldBePresent() {
+    return null;
+  }
 
-    @Override
-    public T popupShouldNotBePresent() {
-        return null;
-    }
+  @Override
+  public T popupShouldNotBePresent() {
+    return null;
+  }
 }

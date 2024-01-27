@@ -11,30 +11,30 @@ import ru.otus.selenium.pages.MainPage;
 @ExtendWith({DriverManagerExtension.class})
 public class MainPageTest {
 
-    @Driver
-    private WebDriver driver;
-    @Page
-    private MainPage mainPage;
+  @Driver
+  private WebDriver driver;
+  @Page
+  private MainPage mainPage;
 
-    @Test
-    public void filterCourseByName() {
+  @Test
+  public void filterCourseByName() {
 
-        var courseName = "Android";
+    var courseName = "Java";
 
-         mainPage
-                .open()
-                .searchCourseByNameAndClick(courseName)
-                .isSpecificLessonsPageDisplayed(courseName)
-                .goBack();
-    }
+    mainPage
+        .open()
+        .searchCourseByNameAndClick(courseName)
+        .isSpecificLessonsPageDisplayed(courseName)
+        .goBack();
+  }
 
-    @Test
-    public void filterCourseByDate() {
+  @Test
+  public void filterCourseByDate() {
 
-         mainPage
-                .open()
-                .searchLatestCourseAndClick(false)
-                .isLessonsPageDisplayed()
-                .goBack();
-    }
+    mainPage
+        .open()
+        .searchLatestCourseAndClick(false)
+        .isLessonsPageDisplayed()
+        .goBack();
+  }
 }
