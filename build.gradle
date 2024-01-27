@@ -42,7 +42,7 @@ dependencies {
 
 checkstyle {
     toolVersion = '8.16'
-    configFile = file("${rootProject.rootDir}/checkstyle.xml")
+    configFile = file("${rootProject.rootDir}/src/main/resources/checkstyle.xml")
 }
 
 task loadYaml {
@@ -61,44 +61,5 @@ test {
         def activeEnvironment = project.hasProperty('activeEnvironment') ? project.activeEnvironment : 'default'
 
         println "Active Environment: $activeEnvironment"
-        println "Base URL: ${getYamlBaseUrl(project.ext.yamlContent, activeEnvironment)}"
     }
 }
-
-String getYamlBaseUrl(yamlContent, activeEnvironment) {
-    return yamlContent.environments.find { it.env == activeEnvironment }?.baseUrl ?: 'N/A'
-}
-
-//def yamlContent
-//
-//task loadYaml {
-//    doLast {
-//        // Load YAML content
-//        def yamlFile = file("${rootProject.rootDir}/src/main/resources/config.yml")
-//        yamlContent = new org.yaml.snakeyaml.Yaml().load(yamlFile.text)
-//    }
-//}
-//
-//test {
-//    useJUnitPlatform()
-//
-//    systemProperty 'activeEnvironment', project.hasProperty('activeEnvironment') ? project.activeEnvironment : 'default'
-//
-//    dependsOn 'loadYaml'
-//
-//    doLast {
-//        // Use the project property for activeEnvironment value
-//        def activeEnvironment = project.hasProperty('activeEnvironment') ? project.activeEnvironment : 'default'
-//
-//        // Access the yamlContent loaded earlier
-//        println "Active Environment: $activeEnvironment"
-//        println "Base URL: ${getYamlBaseUrl(yamlContent, activeEnvironment)}"
-//    }
-//
-//
-//}
-//
-//String getYamlBaseUrl(yamlContent, activeEnvironment) {
-//    // Find and return the corresponding baseUrl for the activeEnvironment
-//    return yamlContent.environments.find { it.env == activeEnvironment }?.baseUrl ?: 'N/A'
-//}
