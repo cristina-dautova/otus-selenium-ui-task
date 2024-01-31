@@ -10,6 +10,10 @@ public class Config {
 
   @Setter
   @Getter
+  private String browserName;
+
+  @Setter
+  @Getter
   private String activeEnvironment;
   private List<EnvironmentConfig> environments;
 

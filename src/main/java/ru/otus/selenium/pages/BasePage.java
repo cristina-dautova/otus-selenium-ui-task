@@ -16,9 +16,8 @@ public abstract class BasePage<T> extends BaseUtils {
   }
 
   public T open() {
-    var configProvider = new ConfigProvider();
-    var activeProfile = configProvider.provide();
-    driver.get(activeProfile.getBaseUrl());
+    var envConfig = new ConfigProvider().provide().values().iterator().next();
+    driver.get(envConfig.getBaseUrl());
     return (T) this;
   }
 

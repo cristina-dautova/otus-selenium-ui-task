@@ -1,3 +1,4 @@
+browserName: chrome
 activeEnvironment: prod
 environments:
   - env: qa
