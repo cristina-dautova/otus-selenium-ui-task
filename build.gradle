@@ -62,4 +62,9 @@ test {
 
         println "Active Environment: $activeEnvironment"
     }
+
+    systemProperty 'junit.jupiter.execution.parallel.enabled', 'true'
+    systemProperty 'junit.jupiter.execution.parallel.mode.default', 'concurrent'
+
+    testLogging { events "passed", "skipped", "failed" }
 }

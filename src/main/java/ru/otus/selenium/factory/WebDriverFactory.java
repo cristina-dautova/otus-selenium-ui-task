@@ -5,6 +5,7 @@ import ru.otus.selenium.applicationconfig.ConfigProvider;
 import ru.otus.selenium.exceptions.BrowserNotSupportedException;
 import ru.otus.selenium.factory.driver.ChromeDriverConfiguration;
 import ru.otus.selenium.factory.driver.FirefoxDriverConfiguration;
+import ru.otus.selenium.factory.driver.SelenoidConfiguration;
 
 public class WebDriverFactory implements IFactory<WebDriver> {
 
@@ -19,6 +20,8 @@ public class WebDriverFactory implements IFactory<WebDriver> {
         return new ChromeDriverConfiguration().configure();
       case "firefox":
         return new FirefoxDriverConfiguration().configure();
+      case "selenoid":
+        return new SelenoidConfiguration().configure();
       default:
         throw new BrowserNotSupportedException(browserName);
     }
